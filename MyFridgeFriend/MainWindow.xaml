@@ -1,0 +1,383 @@
+﻿<Window x:Class="MyFridgeFriend.MainWindow"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:local="clr-namespace:MyFridgeFriend"
+            mc:Ignorable="d"
+            Title="MyFridgeFriend App v1.0" 
+            Height="900"
+            Width="1300"
+            WindowStartupLocation="CenterScreen"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            Background="{DynamicResource MaterialDesignPaper}"
+            TextElement.FontWeight="Medium"
+            TextElement.FontSize="14"
+            FontFamily="{materialDesign:MaterialDesignFont}"
+            MouseDown="Window_MouseDown"
+            ResizeMode="NoResize"
+            >
+
+    <!-- OUTER DOCKPANEL -->
+    <Window.Resources>
+        <!-- STYLES -->
+        <!-- CustomMainWindowStyle -->
+        <Style x:Key="MyMainWindowStyle" TargetType="Window">
+            <Setter Property="Background" Value="#FF76C7B6" />
+
+        </Style>
+
+        <!-- FilterButtonsStyle -->
+        <Style x:Key="FilterButtonsStyle" TargetType="ToggleButton">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="#FF76C7B6" />
+            <Setter Property="BorderBrush" Value="#FF76C7B6" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Margin" Value="8px, 16px"/>
+            <Setter Property="Height" Value="50px"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Width" Value="140px"/>
+            <Setter Property="FontFamily" Value="{materialDesign:MaterialDesignFont}" />
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#FFE6DBBF" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFA0D1C0" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- ActionButtonStyle -->
+        <Style
+            TargetType="Button"
+            x:Key="ActionButton" 
+            BasedOn="{StaticResource {x:Type Button}}">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="40"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="BorderBrush" Value="#000080"/>
+            <Setter Property="Background" Value="DodgerBlue"/>
+            <Setter Property="Margin" Value="10px"/>
+            <Setter Property="Width" Value="100px"/>
+            <Setter Property="Height" Value="100px"/>
+            <Setter Property="FontSize" Value="15"/>
+
+        </Style>
+
+        <!-- ListViewStyle -->
+        <Style x:Key="ListViewStyle">
+            <!-- FIXME: Soli to adapt from test code -->
+        </Style>
+
+        <!-- HeaderStyle -->
+        <Style x:Key="HeaderStyle">
+            <Setter Property="materialDesign:ColorZone.Padding" Value="10px"/>
+            <Setter Property="materialDesign:ColorZone.Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                        <GradientStop Color="#FF76C7B6" Offset="1"/>
+                        <GradientStop Color="#4B009C" Offset="0.1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="materialDesign:ColorZone.MinHeight" Value="80px"/>
+        </Style>
+
+        <!-- BodyStyle -->
+        <Style x:Key="BodyStyle">
+            <Setter Property="materialDesign:ColorZone.Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                        <GradientStop Color="#FF76C7B6" Offset="-.5"/>
+                        <GradientStop Color="CornflowerBlue" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="materialDesign:ColorZone.MinHeight" Value="80px"/>
+            <Setter Property="DockPanel.Background" Value="#FFE0FFB0"></Setter>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel Style="{StaticResource BodyStyle}">
+        <!-- DOCK: TOP = Header -->
+        <materialDesign:ColorZone 
+            DockPanel.Dock="Top"
+            Style="{StaticResource HeaderStyle}"
+            >
+            <StackPanel x:Name="HeaderStackPanel" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Left" 
+                        Width="auto"
+                        >
+                <Image 
+                    MinWidth="50"
+                    MinHeight="20"
+                    MaxHeight="{Binding ActualHeight, ElementName=HeaderStackPanel}"
+                    MaxWidth="800"
+                    Source="Assets/images/logo/png/logo-no-background.png"
+                    />
+
+                <!-- TODO: make this text appear if logo fails to load
+                <TextBlock Text="MyFridgeFriend" FontSize="50" FontWeight="Bold"/>
+                -->
+
+            </StackPanel>
+            <!-- Header Left - Logo -->
+        </materialDesign:ColorZone>
+
+        <!-- DOCK: BOTTOM -->
+        <StatusBar DockPanel.Dock="Bottom" Background="LightBlue">
+            <StatusBarItem>
+                <TextBlock Name="LblStatusMessage" Text="MyFridgeFriend App Started"></TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
+        <!-- INNER DockPanel-->
+        <materialDesign:ColorZone Style="{StaticResource BodyStyle}">
+
+
+            <TabControl x:Name="MainTabControl" SelectionChanged="MainTabControl_SelectionChanged">
+                <!-- Tab for Products -->
+                <TabItem Header="Products">
+
+                    <StackPanel Orientation="Vertical"  Height="693" Width="1200">
+
+                        <!-- ALL FILTERS AND BUTTONS -->
+                        <DockPanel>
+
+                            <!-- LEFT Dock = Action Buttons -->
+                            <Grid DockPanel.Dock="Left" Margin="40, 0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.968,0.499">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Row="0" Grid.Column="0" Content="Print" Click="PrintButton_Click" Style="{StaticResource ActionButton}"/>
+                                <Button Grid.Row="0" Grid.Column="1" Content="Add New" Click="BtnAddItem_Click" Style="{StaticResource ActionButton}"/>
+                                <Button Grid.Row="1" Grid.Column="0" Content="Edit" Click="BtnEditItem_Click"  Style="{StaticResource ActionButton}"/>
+                                <Button Grid.Row="1" Grid.Column="1" Content="Delete" Click="BtnDeleteItem_Click"  Style="{StaticResource ActionButton}"/>
+
+                            </Grid>
+
+                            <StackPanel 
+                    Orientation="Vertical" 
+                    HorizontalAlignment="Center"
+                    Margin="20px"
+                    >
+
+                            </StackPanel>
+
+                            <!-- MAIN Dock = Filter Toggles, Sort Toggles, Search Bar -->
+                            <Grid x:Name="GrdFilters" Focusable="True" HorizontalAlignment="left" Margin="20px, 10px" Grid.IsSharedSizeScope="True">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Row0: Filter Heading 
+                        <Label 
+                                   HorizontalAlignment="Center" 
+                                   HorizontalContentAlignment="Center"
+                                   Margin="0,10,0,0"
+                                   Width="478" 
+                                   Height="85" 
+                                   Content="Inventory" 
+                                   FontSize="33" 
+                                   FontWeight="Bold"  
+                                   Foreground="#000080" 
+                                   VerticalAlignment="Center"
+                                   VerticalContentAlignment="Center"/>-->
+
+                                <!-- Row1: Filter Toggles -->
+                                <DockPanel Grid.Row="1" HorizontalAlignment="Left" Width="578" Height="85">
+                                    <Label 
+                                DockPanel.Dock="Left" 
+                                Content="Location:" 
+                                VerticalAlignment="Center" 
+                                Margin="5" 
+                                HorizontalContentAlignment="Right" 
+                                Width="100px" 
+                                FontSize="16" 
+                                FontWeight="Bold" 
+                                Foreground="#000080"
+                                FontFamily="{materialDesign:MaterialDesignFont}"/>
+                                    <!-- Location Toggles -->
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ToggleButton Grid.Column="0" Content="Freezer" Style="{StaticResource FilterButtonsStyle}" IsChecked="{Binding IsIncludeFreezer, Mode=TwoWay}" Click="UpdateFilteredProducts"/>
+                                        <ToggleButton Grid.Column="1" Content="Fridge" Style="{StaticResource FilterButtonsStyle}" IsChecked="{Binding IsIncludeFridge, Mode=TwoWay}" Click="UpdateFilteredProducts"/>
+                                        <ToggleButton Grid.Column="2" Content="Pantry" Style="{StaticResource FilterButtonsStyle}" IsChecked="{Binding IsIncludePantry, Mode=TwoWay}" Click="UpdateFilteredProducts"/>
+                                    </Grid>
+                                    
+
+
+                                </DockPanel>
+
+                                <!-- Row2: Status Toggles -->
+                                <DockPanel Grid.Row="2" HorizontalAlignment="Center" Width="746" Height="85">
+                                    <Label 
+                                DockPanel.Dock="Left" 
+                                Content="Status:" 
+                                VerticalAlignment="Center" 
+                                Margin="5" 
+                                HorizontalContentAlignment="Right" 
+                                Width="100px" 
+                                FontSize="16" 
+                                FontWeight="Bold" 
+                                Foreground="#000080"
+                                FontFamily="{materialDesign:MaterialDesignFont}"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ToggleButton Grid.Column="0" Content="Running Low" Style="{StaticResource FilterButtonsStyle}" IsChecked="{Binding IsRunningLow, Mode=TwoWay}" Click="UpdateFilteredProducts"/>
+                                        <ToggleButton Grid.Column="1" Content="Out of Stock" Style="{StaticResource FilterButtonsStyle}" IsChecked="{Binding IsOutOfStock, Mode=TwoWay}" Click="UpdateFilteredProducts"/>
+                                        <ToggleButton Grid.Column="2" Content="Expires Soon" Style="{StaticResource FilterButtonsStyle}" IsChecked="{Binding IsExpiresSoon, Mode=TwoWay}" Click="UpdateFilteredProducts" Margin="20, 0,8,0"/>
+                                        <ToggleButton Grid.Column="3" Content="Expired" Style="{StaticResource FilterButtonsStyle}" IsChecked="{Binding IsExpired, Mode=TwoWay}" Click="UpdateFilteredProducts"/>
+                                    </Grid>
+                                </DockPanel>
+
+                                <!-- Row2: Sort Radios 
+                        <DockPanel Grid.Row="2" HorizontalAlignment="Left">
+                            <Label 
+                                DockPanel.Dock="Left" 
+                                Content="Sort:" 
+                                VerticalAlignment="Center" 
+                                Margin="5" 
+                                HorizontalContentAlignment="Right" 
+                                Width="100px" 
+                                FontSize="16" 
+                                FontWeight="Bold" 
+                                Foreground="#000080"
+                                FontFamily="{materialDesign:MaterialDesignFont}"/>
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <RadioButton Grid.Column="0" Content="Name" Style="{StaticResource FilterButtonsStyle}"/>
+                                <RadioButton Grid.Column="1" Content="Stock" Style="{StaticResource FilterButtonsStyle}"/>
+                                <RadioButton Grid.Column="2" Content="Expiration" Style="{StaticResource FilterButtonsStyle}"/>
+                            </Grid>
+                        </DockPanel>-->
+
+                                <!-- Row3: Search Box -->
+                                <DockPanel Grid.Row="3" HorizontalAlignment="Left" Width="364"  Height="85">
+                                    <Label 
+                                DockPanel.Dock="Left" 
+                                Content="Search:" 
+                                VerticalAlignment="Center" 
+                                Margin="5" 
+                                HorizontalContentAlignment="Right" 
+                                Width="100px" 
+                                FontSize="16" 
+                                FontWeight="Bold" 
+                                Foreground="#000080"
+                                FontFamily="{materialDesign:MaterialDesignFont}"/>
+                                    <Grid VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox 
+                                Grid.Column="0"
+                                x:Name="TbxSearch"
+                                FontSize="20"
+                                Text="Search by Product Name..." 
+                                Foreground="Gray" 
+                                VerticalAlignment="Center" 
+                                VerticalContentAlignment="Center"
+                                HorizontalAlignment="Center"
+                                TextChanged="TbxSearch_TextChanged"
+                                GotFocus="TbxSearch_GotFocus"
+                                LostFocus="TbxSearch_LostFocus" 
+                                BorderBrush="DarkSlateBlue"
+                                materialDesign:ShadowAssist.Darken="True"
+                                Margin="8px"
+                            />
+                                    </Grid>
+                                </DockPanel>
+                            </Grid>
+                        </DockPanel>
+
+                        <!-- END: Filters and Buttons -->
+
+                        <!-- DOCK = Bottom -->
+                        <Border 
+                Name="GrdMain"
+                BorderBrush="Black" BorderThickness="2" Margin="10,0,10,10" Padding="0" Background="#F2CDBF" 
+                >
+                            <ListView Name="LvProducts" 
+                              SelectionMode="Extended"
+                              SelectionChanged="LvProducts_SelectionChanged"
+                              SizeChanged="LvProducts_SizeChanged" 
+                              d:ItemsSource="{d:SampleData ItemCount=5}" 
+                              Height="414"
+                              GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
+                              materialDesign:ScrollBarAssist.ButtonsVisibility="Visible" 
+                              Background="#F2CDBF" 
+                              >
+                                <!--SelectionChanged="LvProducts_SelectionChanged"-->
+                                <ListView.Resources>
+                                    <Style TargetType="GridViewColumnHeader" BasedOn="{StaticResource {x:Type GridViewColumnHeader}}">
+                                        <Setter Property="Padding" Value="2,10,2,10"/>
+                                   
+                                    </Style>
+                                </ListView.Resources>
+
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="True">
+                                        <!--<GridViewColumn Header="Id" Width="40" DisplayMemberBinding="{Binding Id}" />-->
+                                        <GridViewColumn Header="Name" Width="220" DisplayMemberBinding="{Binding ProductName}" />
+                                        <GridViewColumn Header="Quantity" Width="70" DisplayMemberBinding="{Binding ActiveQuantity}" />
+                                        <GridViewColumn Header="Minimum" Width="70" DisplayMemberBinding="{Binding MinimumQuantity}" />
+                                        <GridViewColumn Header="Units" Width="90" DisplayMemberBinding="{Binding UnitOfMeasurement}" />
+                                        <GridViewColumn Header="Expires" Width="90" DisplayMemberBinding="{Binding DateOfExpiry, StringFormat='{}{0:MM/dd/yyyy}'}" />
+                                        <GridViewColumn Header="Location" Width="70" DisplayMemberBinding="{Binding StorageLocation.StorageName}" />
+                                        <GridViewColumn Header="Category" Width="170" DisplayMemberBinding="{Binding Category}" />
+                                        <GridViewColumn Header="Notes" Width="330" DisplayMemberBinding="{Binding Notes}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Border>
+                    </StackPanel>
+                </TabItem>
+
+                <!-- Transaction History Tab -->
+                <TabItem Header="Transaction History">
+                    <local:TransactionHistoryTab />
+                </TabItem>
+            </TabControl>
+        </materialDesign:ColorZone>
+    </DockPanel>
+
+</Window>

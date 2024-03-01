@@ -1,0 +1,174 @@
+﻿<Window 
+    x:Class="MyFridgeFriend.AddItemDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:MyFridgeFriend"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d"
+    Height="800" 
+    Width="800"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    Title="MyFridgeFriend - Add A New Item"
+    >
+    <Window.Resources>
+
+        <!-- custom labels -->
+        <Style x:Key="CustomLabelStyle" TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#000080"/>
+            <Setter Property="FontFamily" Value="{materialDesign:MaterialDesignFont}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0,10,0,10"/>
+            <Setter Property="Grid.Column" Value="0" />
+        </Style>
+
+        <!-- custom tbx -->
+        <Style x:Key="CustomTbxStyle" TargetType="TextBox">
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="Foreground" Value="#000080"/>
+            <Setter Property="FontFamily" Value="{materialDesign:MaterialDesignFont}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,10,0,10"/>
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="Text" Value="" />
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+
+        <!-- Custom Style for ToggleButtons -->
+        <Style x:Key="CustomToggleButtonStyle" TargetType="ToggleButton">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="#FF76C7B6" />
+            <Setter Property="BorderBrush" Value="#FF76C7B6" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Width" Value="120" />
+            <Setter Property="FontFamily" Value="{materialDesign:MaterialDesignFont}" />
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#FFE6DBBF" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFA0D1C0" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+
+    <DockPanel Background="#F2CDBF">
+        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+            <Image Name="ImgProduct" Margin="10" RenderTransformOrigin="2.27,0.191" Width="300px" MaxHeight="200px"/>
+
+        </StackPanel>
+        <!-- DOCK: BOTTOM -->
+        <StatusBar DockPanel.Dock="Bottom" Background="LightBlue">
+            <StatusBarItem>
+                <TextBlock Name="LblStatusMessage" Text="Add an item... "></TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <!-- First column for labels -->
+                <ColumnDefinition Width="450"/>
+                <!-- Second column for inputs -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Labels -->
+            <Label Content="Name*" Grid.Row="0" Style="{StaticResource CustomLabelStyle}" />
+            <Label Content="Minimum Quantity" Grid.Row="1" Style="{StaticResource CustomLabelStyle}" />
+            <Label Content="Unit Of Measurement*" Grid.Row="2" Style="{StaticResource CustomLabelStyle}" />
+            <Label Content="Storage Location*" Grid.Row="3" Style="{StaticResource CustomLabelStyle}" />
+            <Label Content="Category*" Grid.Row="4" Style="{StaticResource CustomLabelStyle}" />
+            <Label Content="UPC" Grid.Row="5" Style="{StaticResource CustomLabelStyle}" />
+            <Label Content="Notes" Grid.Row="6" Style="{StaticResource CustomLabelStyle}" />
+            
+            <!-- Inputs -->
+            <TextBox Name="TbxName" Grid.Row="0" Style="{StaticResource CustomTbxStyle}" />
+            <TextBox Name="TbxMinQuantity" Grid.Row="1" Style="{StaticResource CustomTbxStyle}" />
+            <TextBox Name="TbxUnitOfMeasure" Grid.Row="2" Style="{StaticResource CustomTbxStyle}" />
+            <ComboBox Name="CbxStorage" 
+                      Grid.Row="3"
+                      DisplayMemberPath="StorageName" 
+                      SelectedValuePath="Id" 
+                      SelectedIndex="0" 
+                      Margin="0, 0,0,0" 
+                      Grid.Column="1" 
+                      />
+            <ComboBox Name="CbxCategory" 
+                      Grid.Row="4" 
+                      Grid.Column="1" 
+                      ItemsSource="{Binding CategoryEnum}" 
+                      HorizontalAlignment="Stretch" 
+                      Margin="0,10,0,10"
+                      />
+            <TextBox Name="TbxUpc" Grid.Row="5" Style="{StaticResource CustomTbxStyle}" />
+            <TextBox Name="TbxNotes" Grid.Row="6" Style="{StaticResource CustomTbxStyle}" />
+            
+            <Button  Name="BtnUploadImg" Content="Upload Image" 
+                     Grid.Row="7" 
+                     Grid.Column="0"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Click="BtnUploadImg_Click" 
+                     FontFamily="{materialDesign:MaterialDesignFont}" 
+                     FontSize="14" 
+                     Background="#FF76C7B6" 
+                     Foreground="White" 
+                     BorderBrush="#FF76C7B6" 
+                     BorderThickness="2"
+                     Margin="10"
+            />
+
+            <Button Grid.Column="0" Grid.Row="9"  Name="BtnAddItem" Content="Add Item" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top"
+                    Click="BtnAddItem_Click"  
+                    FontFamily="{materialDesign:MaterialDesignFont}" 
+                    FontSize="14" 
+                    Background="#FF76C7B6" 
+                    Foreground="White" 
+                    BorderBrush="#FF76C7B6" 
+                    BorderThickness="2"
+                    Margin="10"
+                    />
+            <Button Name="BtnScanBarcode" Click="BtnScanBarcode_Click" Grid.Column="0" Content="Scan Barcode" 
+                    HorizontalAlignment="Left" Grid.Row="8" 
+                    VerticalAlignment="Top" 
+                    FontFamily="{materialDesign:MaterialDesignFont}" 
+                    FontSize="14" 
+                    Background="#FF76C7B6" 
+                    Foreground="White" 
+                    BorderBrush="#FF76C7B6" 
+                    BorderThickness="2"
+                    Margin="10"
+                    />
+            
+    </Grid>
+        </DockPanel>
+</Window>

@@ -1,0 +1,101 @@
+﻿<Window x:Class="MyFridgeFriend.PrintDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="MyFridgeFriend - Print/Export Inventory" 
+        Height="400" 
+        Width="600"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        >
+    <Window.Resources>
+        <!-- Custom Style for ToggleButtons -->
+        <Style x:Key="CustomToggleButtonStyle" TargetType="ToggleButton">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="#FF76C7B6" />
+            <Setter Property="BorderBrush" Value="#FF76C7B6" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Width" Value="120" />
+            <Setter Property="FontFamily" Value="{materialDesign:MaterialDesignFont}" />
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#FFE6DBBF" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFA0D1C0" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#FFF2CDBF">
+        <Border BorderBrush="#FF76C7B6" BorderThickness="15" CornerRadius="15">
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" Width="558">
+                <TextBlock Text="Print Inventory" FontSize="30" FontWeight="Bold" Margin="10" Foreground="#000080" Width="217"
+                           FontFamily="{materialDesign:MaterialDesignFont}" />
+
+                <!-- Include Items From -->
+                <StackPanel Orientation="Horizontal" Margin="10" Width="536">
+                    <TextBlock Text="Include items from:" VerticalAlignment="Center" Margin="5" Foreground="#FF001F3F" Width="114"
+                               FontFamily="{materialDesign:MaterialDesignFont}" />
+                    <ToggleButton x:Name="includeFridge" Content="😎 Fridge" Click="BtnFridge_Click"
+                                  Style="{StaticResource CustomToggleButtonStyle}" IsChecked="{Binding IsIncludeFridge, Mode=TwoWay}" />
+                    <ToggleButton x:Name="includePantry" Content="🥫 Pantry" Click="BtnPantry_Click"
+                                  Style="{StaticResource CustomToggleButtonStyle}" IsChecked="{Binding IsIncludePantry, Mode=TwoWay}" />
+                    <ToggleButton x:Name="includeFreezer" Content="❄️ Freezer" Click="BtnFreezer_Click"
+                                  Style="{StaticResource CustomToggleButtonStyle}" IsChecked="{Binding IsIncludeFreezer, Mode=TwoWay}" />
+                </StackPanel>
+
+                <!-- Limit List To -->
+                <StackPanel Orientation="Horizontal" Margin="10" Width="547">
+                    <TextBlock Text="Limit list to:" VerticalAlignment="Center" Margin="5" Foreground="#FF001F3F" Width="114"
+                               FontFamily="{materialDesign:MaterialDesignFont}" />
+                    <ToggleButton x:Name="fullyStocked" Content="✔️ Fully Stocked" Click="BtnFullyStocked_Click"
+                                  Style="{StaticResource CustomToggleButtonStyle}" IsChecked="{Binding IsFullyStocked, Mode=TwoWay}" />
+                    <ToggleButton x:Name="runningLow" Content="⚠️ Running Low" Click="BtnRunningLow_Click"
+                                  Style="{StaticResource CustomToggleButtonStyle}" IsChecked="{Binding IsRunningLow, Mode=TwoWay}" />
+                    <ToggleButton x:Name="outOfStock" Content="🚨 Out of Stock" Click="BtnOutOfStock_Click"
+                                  Style="{StaticResource CustomToggleButtonStyle}" IsChecked="{Binding IsOutOfStock, Mode=TwoWay}" />
+                </StackPanel>
+
+                <!-- Additional Filters -->
+                <StackPanel Orientation="Horizontal" Margin="10" Width="484" RenderTransformOrigin="0.5,0.5">
+                    <StackPanel.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform />
+                            <SkewTransform AngleY="0.173" />
+                            <RotateTransform />
+                            <TranslateTransform Y="0.624" />
+                        </TransformGroup>
+                    </StackPanel.RenderTransform>
+                    <TextBlock Width="99" FontFamily="{materialDesign:MaterialDesignFont}" />
+                    <ToggleButton x:Name="freshOrNA" Content="🌿 Fresh or N/A" Click="BtnFreshOrNA_Click"
+                                  Style="{StaticResource CustomToggleButtonStyle}" Width="118" IsChecked="{Binding IsFreshOrNA, Mode=TwoWay}" />
+                    <ToggleButton x:Name="expiresSoon" Content="🕒 Expires Soon" Click="BtnExpiresSoon_Click"
+                                  Style="{StaticResource CustomToggleButtonStyle}" IsChecked="{Binding IsExpiresSoon, Mode=TwoWay}" />
+                    <ToggleButton x:Name="expired" Content="⏰ Expired" Click="BtnExpired_Click"
+                                  Style="{StaticResource CustomToggleButtonStyle}" Width="118" IsChecked="{Binding IsExpired, Mode=TwoWay}" />
+                </StackPanel>
+
+            </StackPanel>
+        </Border>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,285,0,0" Height="63" Width="163">
+            <Button Content="Export CSV" Padding="10,5" Click="BtnExport_Click" FontFamily="{materialDesign:MaterialDesignFont}" 
+                    FontSize="14" Background="#FF76C7B6" Foreground="White" BorderBrush="#FF76C7B6" BorderThickness="2"
+                    Margin="5,0" />
+            <Button Content="Print" Padding="10,5" Click="BtnPrint_Click" FontFamily="{materialDesign:MaterialDesignFont}" 
+                    FontSize="14" Background="#FF76C7B6" Foreground="White" BorderBrush="#FF76C7B6" BorderThickness="2"
+                    Margin="5,0" />
+        </StackPanel>
+
+
+
+    </Grid>
+</Window>
