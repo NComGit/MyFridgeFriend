@@ -14,7 +14,7 @@ Use the installer!
 
 
 ## Usage
-**Main Page**
+**Main Page**<br>
 <img src='demoAssets/readMeImages/1_MainScreen.png' width='75%'>
 **List of Products, with dynamic search and filters**
 <img src='demoAssets/readMeImages/2_Search_Filters.png'>
