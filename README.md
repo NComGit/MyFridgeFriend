@@ -24,6 +24,8 @@ Use the installer!
 <img src='demoAssets/readMeImages/4_DeleteProducts.png' width='75%'><br>
 **Editing Products**<br>
 <img src='demoAssets/readMeImages/5_EditProducts.png' width='75%'><br>
+**Printing/Exporting Product List, with filters**<br>
+<img src='demoAssets/readMeImages/7_Print.png' width='75%'><br>
 **List of Transactions (Stock Movements)**<br>
 <img src='demoAssets/readMeImages/6_Transactions.png' width='75%'><br>
 ## License
