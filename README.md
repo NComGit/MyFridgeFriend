@@ -8,9 +8,9 @@ MyFridgeFriend was built in collaboration with @sophiephie and @cirque-du-soli
 
 Use the installer!
 
-<img src='demoAssets/readMeImages/Installer_1' width='75%'>
+<img src='demoAssets/readMeImages/Installer_1.png' width='75%'>
 
-<img src='demoAssets/readMeImages/Installer_2' width='75%'>
+<img src='demoAssets/readMeImages/Installer_2.png' width='75%'>
 
 
 ## Usage
