@@ -15,7 +15,7 @@ Use the installer!
 
 ## Usage
 **Main Page**
-<img src='demoAssets/readMeImages/1_MainScreen.png' width='150px'>
+<img src='demoAssets/readMeImages/1_MainScreen.png' width='20%'>
 **List of Products, with dynamic search and filters**
 <img src='demoAssets/readMeImages/2_Search_Filters.png'>
 **Adding Products, with barcode scanner and image**
